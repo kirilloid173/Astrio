@@ -21,13 +21,24 @@ interface ProductsType {
 
 const brandsJson = await $fetch<BrandsType[]>('/json/brands.json');
 const productsJson = await $fetch<ProductsType[]>('/json/products.json');
+
+const dataShow = ref<ProductsType[]>(productsJson);
+
+function filterProducts(brandId: number) {
+    const findBrand = productsJson.filter((item) => item.brand === brandId);
+    if (findBrand) dataShow.value = findBrand;
+}
 </script>
 
 <template>
     <div class="catalog">
         <div class="catalog__filter">
             <p>Все бренды</p>
-            <p v-for="brand in brandsJson" :key="brand.id">
+            <p
+                v-for="brand in brandsJson"
+                :key="brand.id"
+                v-on:click="filterProducts(brand.id)"
+            >
                 {{ brand.title }}
             </p>
         </div>
@@ -36,7 +47,7 @@ const productsJson = await $fetch<ProductsType[]>('/json/products.json');
             <div class="catalog__items">
                 <div
                     class="catalog__item"
-                    v-for="product in productsJson"
+                    v-for="product in dataShow"
                     :key="product.id"
                 >
                     <img
