@@ -17,6 +17,7 @@
     justify-content: space-between;
     border-bottom: 2px solid rgb(42, 40, 40);
     padding-bottom: 10px;
+    margin-bottom: 25px;
 }
 
 .hero-section__cart {
