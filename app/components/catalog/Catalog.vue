@@ -19,14 +19,30 @@ interface ProductsType {
     brand: number;
 }
 
-const brandsJson = await $fetch<BrandsType[]>('/json/brands.json');
-const productsJson = await $fetch<ProductsType[]>('/json/products.json');
+const { data: brandsJson } = await useFetch<BrandsType[]>('/json/brands.json', {
+    server: false,
+});
 
-const dataShow = ref<ProductsType[]>(productsJson);
+const { data: productsJson } = await useFetch<ProductsType[]>(
+    '/json/products.json',
+    {
+        server: false,
+    }
+);
 
-function filterProducts(brandId: number) {
-    const findBrand = productsJson.filter((item) => item.brand === brandId);
-    if (findBrand) dataShow.value = findBrand;
+const dataShow = ref<ProductsType[]>([]);
+
+watchEffect(() => {
+    if (productsJson.value) {
+        dataShow.value = productsJson.value;
+    }
+});
+
+function filterProducts(brand: BrandsType) {
+    const filteredBrand = productsJson.value!.filter(
+        (item) => item.brand === brand.id
+    );
+    if (filteredBrand || filteredBrand[0]) dataShow.value = filteredBrand;
 }
 </script>
 
@@ -37,7 +53,7 @@ function filterProducts(brandId: number) {
             <p
                 v-for="brand in brandsJson"
                 :key="brand.id"
-                v-on:click="filterProducts(brand.id)"
+                v-on:click="filterProducts(brand)"
             >
                 {{ brand.title }}
             </p>

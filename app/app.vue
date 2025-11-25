@@ -1,12 +1,8 @@
-<script setup lang="ts">
-import HeroSection from './components/herosection/HeroSection.vue';
-import Catalog from './components/catalog/Catalog.vue';
-</script>
+<script setup lang="ts"></script>
 
 <template>
     <div class="container">
-        <HeroSection />
-        <Catalog />
+        <NuxtPage />
     </div>
 </template>
 
