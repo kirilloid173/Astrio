@@ -111,17 +111,6 @@ function filterReset() {
     text-decoration: underline;
 }
 
-.catalog__filter::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    right: -30%;
-    width: 2px;
-    height: 80%;
-    background-color: black;
-}
-
 .catalog__main {
     display: flex;
     flex-direction: column;
@@ -131,7 +120,6 @@ function filterReset() {
 
 .catalog__title {
     font-size: 32px;
-    transform: translateY(-10%);
 }
 
 .catalog__items {
