@@ -44,12 +44,18 @@ function filterProducts(brand: BrandsType) {
     );
     if (filteredBrand || filteredBrand[0]) dataShow.value = filteredBrand;
 }
+
+function filterReset() {
+    if (productsJson.value) {
+        dataShow.value = productsJson.value;
+    }
+}
 </script>
 
 <template>
     <div class="catalog">
         <div class="catalog__filter">
-            <p>Все бренды</p>
+            <p v-on:click="filterReset">Все бренды</p>
             <p
                 v-for="brand in brandsJson"
                 :key="brand.id"
@@ -93,6 +99,16 @@ function filterProducts(brand: BrandsType) {
     gap: 10px;
     position: relative;
     margin-right: 65px;
+}
+
+.catalog__filter p {
+    font-size: 16px;
+    padding: 6px;
+}
+
+.catalog__filter p:hover {
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 .catalog__filter::after {
