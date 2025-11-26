@@ -1,6 +1,6 @@
 <template>
     <div class="hero-section-cart">
-        <img src="/images/logo.png" alt="" />
+        <NuxtLink to="/"><img src="/images/logo.png" alt="" /></NuxtLink>
     </div>
 </template>
 
