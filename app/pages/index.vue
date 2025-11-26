@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import Catalog from '~/components/catalog/Catalog.vue';
-import HeroSection from '~/components/herosection/HeroSection.vue';
+import HeroSectionCards from '~/components/hero-section-cards/HeroSectionCards.vue';
 </script>
 
 <template>
-    <HeroSection />
+    <HeroSectionCards />
     <Catalog />
 </template>

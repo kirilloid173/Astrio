@@ -3,21 +3,25 @@ const cartCountStore = useCartCountStore();
 </script>
 
 <template>
-    <div class="hero-section">
+    <div class="hero-section-cards">
         <img src="/images/logo.png" alt="logo" />
-        <div class="hero-section__right-block">
-            <img
-                class="hero-section__cart"
-                src="/images/cart_logo.svg"
-                alt="cart"
-            />
-            <p class="hero-section__count-cart">{{ cartCountStore.count }}</p>
+        <div class="hero-section-cards__right-block">
+            <NuxtLink to="/cart">
+                <img
+                    class="hero-section-cards__cart"
+                    src="/images/cart_logo.svg"
+                    alt="cart"
+                />
+                <p class="hero-section-cards__count-cart">
+                    {{ cartCountStore.count }}
+                </p>
+            </NuxtLink>
         </div>
     </div>
 </template>
 
-<style>
-.hero-section {
+<style scoped lang="css">
+.hero-section-cards {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -27,12 +31,12 @@ const cartCountStore = useCartCountStore();
     margin-bottom: 25px;
 }
 
-.hero-section__right-block {
+.hero-section-cards__right-block {
     position: relative;
     padding: 8px;
 }
 
-.hero-section__count-cart {
+.hero-section-cards__count-cart {
     position: absolute;
     background-color: rgb(62, 60, 60);
     color: white;
@@ -42,7 +46,7 @@ const cartCountStore = useCartCountStore();
     top: 6px;
 }
 
-.hero-section__cart {
+.hero-section-cards__cart {
     width: 60px;
     height: 60px;
 }
