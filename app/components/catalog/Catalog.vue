@@ -147,7 +147,8 @@ p.catalog__filter-title {
 .catalog__items {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 100px;
+    gap: 55px;
+    margin-top: 24px;
 }
 
 .catalog__item {
@@ -178,6 +179,11 @@ p.catalog__filter-title {
 
 .catalog__item-brand {
     font-size: 16px;
+}
+
+.catalog__item-price {
+    font-size: 24px;
+    font-weight: 700;
 }
 
 .catalog__item img {
