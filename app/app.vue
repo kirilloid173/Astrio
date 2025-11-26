@@ -17,6 +17,7 @@
     margin: 0;
     box-sizing: content-box;
     font-family: 'Inter', Arial, Helvetica, sans-serif;
+    color: rgb(42, 40, 40);
 }
 .container {
     margin: 0 auto;

@@ -101,7 +101,7 @@ function addCart() {
     </div>
 </template>
 
-<style lang="css">
+<style scoped lang="css">
 .catalog {
     display: flex;
     flex-direction: row;
