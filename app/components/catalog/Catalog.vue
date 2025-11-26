@@ -167,6 +167,7 @@ p.catalog__filter-title {
 .catalog__item:hover {
     cursor: pointer;
     border: 2px solid rgb(42, 40, 40);
+    box-shadow: 0 8px 10px rgb(42, 40, 40);
 }
 
 .catalog__item-title {
