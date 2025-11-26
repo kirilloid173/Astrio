@@ -19,6 +19,8 @@ interface ProductsType {
     brand: number;
 }
 
+const cartCountStore = useCartCountStore();
+
 const { data: brandsJson } = await useFetch<BrandsType[]>('/json/brands.json', {
     server: false,
 });
@@ -49,6 +51,10 @@ function filterReset() {
     if (productsJson.value) {
         dataShow.value = productsJson.value;
     }
+}
+
+function addCart() {
+    cartCountStore.count++;
 }
 </script>
 
@@ -86,7 +92,7 @@ function filterReset() {
                     <p class="catalog__item-price">
                         ${{ product.regular_price.value }}
                     </p>
-                    <button class="catalog__item-button">
+                    <button v-on:click="addCart" class="catalog__item-button">
                         Добавить в корзину
                     </button>
                 </div>
