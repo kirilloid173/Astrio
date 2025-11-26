@@ -146,8 +146,6 @@ p.catalog__filter-title {
 
 .catalog__items {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 55px;
     margin-top: 24px;
 }
 
@@ -215,6 +213,61 @@ p.catalog__filter-title {
 
     100% {
         background-color: rgb(85, 116, 73);
+    }
+}
+
+@media (min-width: 1440px) {
+    .catalog__items {
+        gap: 55px;
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (min-width: 1380px) and (max-width: 1440px) {
+    .catalog__items {
+        gap: 20px;
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1380px) {
+    .catalog__items {
+        gap: 80px;
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1030px) and (max-width: 1200px) {
+    .catalog__items {
+        gap: 250px;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 850px) and (max-width: 1030px) {
+    .catalog__items {
+        gap: 60px;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 530px) and (max-width: 850px) {
+    .catalog__main {
+        margin: 0 auto;
+    }
+}
+@media (min-width: 330px) and (max-width: 530px) {
+    .catalog__item img {
+        width: 100%;
+    }
+}
+
+@media (max-width: 360px) {
+    .catalog__item img {
+        width: 100%;
+    }
+    .catalog__filter {
+        margin-right: 15px;
     }
 }
 </style>

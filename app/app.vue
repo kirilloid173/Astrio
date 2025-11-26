@@ -19,7 +19,32 @@
     font-family: 'Inter', Arial, Helvetica, sans-serif;
 }
 .container {
-    width: 1440px;
     margin: 0 auto;
+}
+
+@media (min-width: 1460px) {
+    .container {
+        width: 1440px;
+    }
+}
+
+@media (min-width: 900px) and (max-width: 1460px) {
+    .container {
+        width: 96vw;
+        padding: 0 20px;
+    }
+}
+
+@media (min-width: 400px) and (max-width: 900px) {
+    .container {
+        width: 80vw;
+        padding: 0 40px;
+    }
+}
+
+@media (max-width: 400px) {
+    .container {
+        width: 94vw;
+    }
 }
 </style>
