@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const cartCountStore = useCartCountStore();
+const cartDataStore = useCartDataStore();
 </script>
 
 <template>
@@ -13,7 +13,7 @@ const cartCountStore = useCartCountStore();
                     alt="cart"
                 />
                 <p class="hero-section-cards__count-cart">
-                    {{ cartCountStore.count }}
+                    {{ cartDataStore.counts }}
                 </p>
             </NuxtLink>
         </div>

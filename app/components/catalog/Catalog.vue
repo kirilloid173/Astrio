@@ -19,7 +19,7 @@ interface ProductsType {
     brand: number;
 }
 
-const cartCountStore = useCartCountStore();
+const cartDataStore = useCartDataStore();
 
 const { data: brandsJson } = await useFetch<BrandsType[]>('/json/brands.json', {
     server: false,
@@ -53,8 +53,16 @@ function filterReset() {
     }
 }
 
-function addCart() {
-    cartCountStore.count++;
+function addNewItemToCart(productId: number) {
+    if (productsJson.value) {
+        const foundProduct = productsJson.value.find(
+            (item) => item.id === productId
+        );
+        if (foundProduct) {
+            cartDataStore.addToCart(foundProduct);
+            console.log(cartDataStore.data);
+        }
+    }
 }
 </script>
 
@@ -92,7 +100,10 @@ function addCart() {
                     <p class="catalog__item-price">
                         ${{ product.regular_price.value }}
                     </p>
-                    <button v-on:click="addCart" class="catalog__item-button">
+                    <button
+                        v-on:click="addNewItemToCart(product.id)"
+                        class="catalog__item-button"
+                    >
                         Добавить в корзину
                     </button>
                 </div>
