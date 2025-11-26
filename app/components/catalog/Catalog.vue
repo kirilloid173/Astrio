@@ -55,7 +55,9 @@ function filterReset() {
 <template>
     <div class="catalog">
         <div class="catalog__filter">
-            <p v-on:click="filterReset">Все бренды</p>
+            <p class="catalog__filter-title" v-on:click="filterReset">
+                Все бренды
+            </p>
             <p
                 v-for="brand in brandsJson"
                 :key="brand.id"
@@ -78,8 +80,15 @@ function filterReset() {
                         alt="image_product"
                     />
                     <p class="catalog__item-title">{{ product.title }}</p>
-                    <p>{{ product.brand }}</p>
-                    <p>{{ product.regular_price.value }}</p>
+                    <p class="catalog__item-brand">
+                        Бренд: {{ product.brand }}
+                    </p>
+                    <p class="catalog__item-price">
+                        ${{ product.regular_price.value }}
+                    </p>
+                    <button class="catalog__item-button">
+                        Добавить в корзину
+                    </button>
                 </div>
             </div>
         </div>
@@ -90,6 +99,7 @@ function filterReset() {
 .catalog {
     display: flex;
     flex-direction: row;
+    margin-bottom: 50px;
 }
 
 .catalog__filter {
@@ -103,12 +113,18 @@ function filterReset() {
 
 .catalog__filter p {
     font-size: 16px;
-    padding: 6px;
+    padding: 12px;
+    border-radius: 20px;
+}
+
+p.catalog__filter-title {
+    white-space: nowrap;
 }
 
 .catalog__filter p:hover {
     cursor: pointer;
-    text-decoration: underline;
+    background-color: rgb(48, 47, 47);
+    color: white;
 }
 
 .catalog__main {
@@ -133,10 +149,60 @@ function filterReset() {
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-end;
+    padding: 10px;
+    border: 2px solid transparent;
+    border-radius: 20px;
+}
+
+.catalog__item p:last-of-type {
+    margin-bottom: 12px;
+    margin-top: 14px;
+}
+
+.catalog__item:hover {
+    cursor: pointer;
+    border: 2px solid rgb(42, 40, 40);
+}
+
+.catalog__item-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.catalog__item-brand {
+    font-size: 16px;
 }
 
 .catalog__item img {
     width: 250px;
     height: auto;
+}
+
+.catalog__item-button {
+    padding: 12px;
+    border: none;
+    font-size: 14px;
+    border-radius: 20px;
+    color: white;
+    background-color: rgb(48, 47, 47);
+    letter-spacing: 1px;
+}
+
+.catalog__item-button:hover {
+    cursor: pointer;
+    animation: fadeInButton 0.5s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeInButton {
+    0% {
+        background-color: rgb(48, 47, 47);
+    }
+
+    100% {
+        background-color: rgb(85, 116, 73);
+    }
 }
 </style>
