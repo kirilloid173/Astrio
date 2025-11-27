@@ -11,6 +11,7 @@ interface ProductsType {
     };
     image: string;
     brand: number;
+    quantity?: number;
 }
 
 export const useCartDataStore = defineStore('data', {
@@ -24,7 +25,14 @@ export const useCartDataStore = defineStore('data', {
     },
     actions: {
         addToCart(newProduct: ProductsType) {
-            this.data.push(newProduct);
+            const checkProductInCart = this.data.find(
+                (item) => item.id === newProduct.id
+            );
+            if (checkProductInCart && checkProductInCart.quantity) {
+                checkProductInCart.quantity += 1;
+            } else {
+                this.data.push(newProduct);
+            }
         },
     },
 });

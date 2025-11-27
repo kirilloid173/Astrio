@@ -17,6 +17,7 @@ interface ProductsType {
     };
     image: string;
     brand: number;
+    quantity?: number;
 }
 
 const cartDataStore = useCartDataStore();
@@ -59,8 +60,10 @@ function addNewItemToCart(productId: number) {
             (item) => item.id === productId
         );
         if (foundProduct) {
+            if (!foundProduct.quantity) {
+                foundProduct.quantity = 1;
+            }
             cartDataStore.addToCart(foundProduct);
-            console.log(cartDataStore.data);
         }
     }
 }
