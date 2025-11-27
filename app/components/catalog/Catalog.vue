@@ -103,6 +103,13 @@ function addNewItemToCart(productId: number) {
                     <p class="catalog__item-price">
                         ${{ product.regular_price.value }}
                     </p>
+                    <div class="catalog__item-config">
+                        <div class="item-config__red"></div>
+                        <div class="item-config__blue"></div>
+                        <div class="item-config__black"></div>
+                        <div class="item-config__size-m">M</div>
+                        <div class="item-config__size-l">L</div>
+                    </div>
                     <button
                         v-on:click="addNewItemToCart(product.id)"
                         class="catalog__item-button"
@@ -171,6 +178,69 @@ p.catalog__filter-title {
     padding: 10px;
     border: 2px solid transparent;
     border-radius: 20px;
+}
+
+.catalog__item-config {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.catalog__item-config div:hover {
+    cursor: pointer;
+    border: 3px solid rgb(227, 165, 20);
+}
+
+.item-config__red {
+    width: 50px;
+    height: 30px;
+    border: 3px solid rgb(48, 47, 47);
+    background-color: rgb(186, 39, 39);
+}
+
+.item-config__blue {
+    width: 50px;
+    height: 30px;
+    border: 3px solid rgb(48, 47, 47);
+    background-color: rgb(40, 125, 228);
+}
+
+.item-config__black {
+    width: 50px;
+    height: 30px;
+    border: 3px solid rgb(48, 47, 47);
+    background-color: rgb(48, 47, 47);
+}
+
+.item-config__size-m {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 30px;
+    border: 3px solid rgb(48, 47, 47);
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.item-config__size-m:hover {
+    color: rgb(227, 165, 20);
+}
+
+.item-config__size-l {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 30px;
+    border: 3px solid rgb(48, 47, 47);
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.item-config__size-l:hover {
+    color: rgb(227, 165, 20);
 }
 
 .catalog__item p:last-of-type {
