@@ -1,3 +1,25 @@
+<script setup lang="ts">
+const cartDataStore = useCartDataStore();
+
+interface cartData {
+    type: string;
+    id: number;
+    sku: string;
+    title: string;
+    regular_price: {
+        currency: string;
+        value: number;
+    };
+    image: string;
+    brand: number;
+    quantity: number;
+}
+
+function totalPriceItem(cartItem: cartData) {
+    return Number(cartItem.regular_price.value * cartItem.quantity).toFixed(2);
+}
+</script>
+
 <template>
     <h1 class="cart-title">Ваша корзина</h1>
     <div class="cart-subtitle">
@@ -11,30 +33,46 @@
         </div>
     </div>
     <div class="cart">
-        <div class="cart__item">
+        <div
+            v-for="cartData in cartDataStore.data"
+            :key="cartData.id"
+            class="cart__item"
+        >
             <div class="item-block-left">
                 <img
                     class="item-block-left__image"
-                    src="/images/1.png"
+                    :src="cartData.image"
                     alt="product-logo"
                 />
-                <p class="item-block-left__title">Brand Thirty-five</p>
+                <p class="item-block-left__title">{{ cartData.title }}</p>
             </div>
             <div class="item-block-right">
-                <p class="item-block-right__price">$88.9</p>
+                <p class="item-block-right__price">
+                    ${{ cartData.regular_price.value }}
+                </p>
                 <input
                     class="item-block-right__quantity"
                     type="number"
                     min="1"
                     step="1"
-                    value="1"
+                    :value="cartData.quantity"
+                    v-on:input="
+                        cartDataStore.changeQuantityItemCart(
+                            cartData.id,
+                            $event
+                        )
+                    "
                 />
-                <p class="item-block-right__total-price">$88.9</p>
+                <p class="item-block-right__total-price">
+                    ${{ totalPriceItem(cartData) }}
+                </p>
             </div>
         </div>
     </div>
     <div class="subtotal">
-        <p class="subtotal__price">Итоговая цена: <span>$355.56</span></p>
+        <p class="subtotal__price">
+            Итоговая цена: <span>${{ cartDataStore.totalPrice }}</span>
+        </p>
         <button class="subtotal__button-checkout">Оформить</button>
     </div>
 </template>

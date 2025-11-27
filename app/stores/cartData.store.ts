@@ -11,7 +11,7 @@ interface ProductsType {
     };
     image: string;
     brand: number;
-    quantity?: number;
+    quantity: number;
 }
 
 export const useCartDataStore = defineStore('data', {
@@ -20,9 +20,19 @@ export const useCartDataStore = defineStore('data', {
             data: [] as ProductsType[],
         };
     },
+
     getters: {
         counts: (state) => state.data.length,
+        totalPrice: (state) => {
+            const totalPrice = state.data.reduce((sum, item) => {
+                const quantity = item.quantity ?? 1;
+                return sum + item.regular_price.value * quantity;
+            }, 0);
+
+            return Number(totalPrice.toFixed(2));
+        },
     },
+
     actions: {
         addToCart(newProduct: ProductsType) {
             const checkProductInCart = this.data.find(
@@ -32,6 +42,18 @@ export const useCartDataStore = defineStore('data', {
                 checkProductInCart.quantity += 1;
             } else {
                 this.data.push(newProduct);
+            }
+        },
+
+        changeQuantityItemCart(idItem: number, eventTarget: InputEvent) {
+            const numberQuantity = Number(
+                (eventTarget.target as HTMLInputElement).value
+            );
+
+            const foundItem = this.data.find((item) => item.id === idItem);
+
+            if (foundItem) {
+                foundItem.quantity = numberQuantity;
             }
         },
     },
