@@ -56,5 +56,13 @@ export const useCartDataStore = defineStore('data', {
                 foundItem.quantity = numberQuantity;
             }
         },
+
+        deleteItemCart(idItem: number) {
+            const foundItem = this.data.find((item) => item.id === idItem);
+
+            if (foundItem) {
+                this.data = this.data.filter((item) => item.id !== idItem);
+            }
+        },
     },
 });

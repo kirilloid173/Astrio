@@ -55,6 +55,7 @@ function totalPriceItem(cartItem: cartData) {
                     type="number"
                     min="1"
                     step="1"
+                    max="99"
                     :value="cartData.quantity"
                     v-on:input="
                         cartDataStore.changeQuantityItemCart(
@@ -66,6 +67,12 @@ function totalPriceItem(cartItem: cartData) {
                 <p class="item-block-right__total-price">
                     ${{ totalPriceItem(cartData) }}
                 </p>
+                <button
+                    class="item-block-right__button-delete"
+                    v-on:click="cartDataStore.deleteItemCart(cartData.id)"
+                >
+                    Удалить
+                </button>
             </div>
         </div>
     </div>
@@ -103,8 +110,8 @@ function totalPriceItem(cartItem: cartData) {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 100px;
-    margin-right: 40px;
+    gap: 70px;
+    margin-right: 240px;
 }
 
 .subtitle__left-block {
@@ -143,7 +150,7 @@ function totalPriceItem(cartItem: cartData) {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 120px;
+    gap: 80px;
 }
 
 .item-block-right__price {
@@ -154,12 +161,28 @@ function totalPriceItem(cartItem: cartData) {
 .item-block-right__quantity {
     width: 40px;
     font-size: 20px;
+    padding: 10px;
+    border: 1px solid rgb(42, 40, 40);
 }
 
 .item-block-right__total-price {
     font-size: 26px;
     font-weight: 600;
     width: 120px;
+}
+
+.item-block-right__button-delete {
+    padding: 12px;
+    border-radius: 20px;
+    border: none;
+    background-color: rgb(160, 79, 79);
+    color: white;
+    font-size: 24px;
+}
+
+.item-block-right__button-delete:hover {
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 .item-block-left__image {
