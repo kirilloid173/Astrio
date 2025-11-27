@@ -32,7 +32,7 @@ watch(
 <style lang="css">
 @font-face {
     font-family: 'Inter';
-    src: url('/assets/fonts/Inter.ttf');
+    src: url('/fonts/Inter.ttf');
 }
 
 * {
