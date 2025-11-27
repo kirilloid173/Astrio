@@ -1,4 +1,27 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const cartDataStore = useCartDataStore();
+
+onMounted(() => {
+    const localStorageCart = localStorage.getItem('cartData');
+
+    // check exist localStorage or not
+    if (localStorageCart !== null) {
+        cartDataStore.data = JSON.parse(localStorageCart);
+    } else {
+        localStorage.setItem('cartData', JSON.stringify([]));
+    }
+});
+
+watch(
+    () => cartDataStore.data,
+    (newValue) => {
+        if (import.meta.client) {
+            localStorage.setItem('cartData', JSON.stringify(newValue));
+        }
+    },
+    { deep: true }
+);
+</script>
 
 <template>
     <div class="container">
