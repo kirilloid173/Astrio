@@ -44,12 +44,17 @@ function totalPriceItem(cartItem: cartData) {
                     :src="cartData.image"
                     alt="product-logo"
                 />
-                <p class="item-block-left__title">{{ cartData.title }}</p>
+                <p class="item-block-left__title">
+                    <span class="mobile-view">Товар: </span>{{ cartData.title }}
+                </p>
             </div>
             <div class="item-block-right">
                 <p class="item-block-right__price">
-                    ${{ cartData.regular_price.value }}
+                    <span class="mobile-view">Цена: </span>${{
+                        cartData.regular_price.value
+                    }}
                 </p>
+                <span class="mobile-view">Количество: </span>
                 <input
                     class="item-block-right__quantity"
                     type="number"
@@ -65,7 +70,9 @@ function totalPriceItem(cartItem: cartData) {
                     "
                 />
                 <p class="item-block-right__total-price">
-                    ${{ totalPriceItem(cartData) }}
+                    <span class="mobile-view">Общая стоимость: </span>${{
+                        totalPriceItem(cartData)
+                    }}
                 </p>
                 <button
                     class="item-block-right__button-delete"
@@ -126,7 +133,6 @@ function totalPriceItem(cartItem: cartData) {
 
 .cart__item {
     display: flex;
-    flex-direction: row;
     align-items: center;
     padding: 14px 0;
     border-bottom: 2px solid rgb(42, 40, 40);
@@ -136,7 +142,6 @@ function totalPriceItem(cartItem: cartData) {
 
 .item-block-left {
     display: flex;
-    flex-direction: row;
     align-items: center;
 }
 
@@ -148,9 +153,7 @@ function totalPriceItem(cartItem: cartData) {
 
 .item-block-right {
     display: flex;
-    flex-direction: row;
     align-items: center;
-    gap: 80px;
 }
 
 .item-block-right__price {
@@ -204,7 +207,7 @@ function totalPriceItem(cartItem: cartData) {
 }
 
 .subtotal__price span {
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .subtotal__button-checkout {
@@ -215,10 +218,77 @@ function totalPriceItem(cartItem: cartData) {
     padding: 14px;
     font-size: 24px;
     letter-spacing: 1px;
+    margin-bottom: 50px;
 }
 
 .subtotal__button-checkout:hover {
     cursor: pointer;
     text-decoration: underline;
+}
+
+.mobile-view {
+    font-size: 20px;
+}
+
+@media (min-width: 1130px) {
+    .cart__item {
+        flex-direction: row;
+    }
+
+    .mobile-view {
+        display: none;
+    }
+
+    .subtotal {
+        width: 100%;
+    }
+}
+
+@media (max-width: 1130px) {
+    .mobile-view {
+        display: block;
+    }
+
+    .cart-subtitle {
+        display: none;
+    }
+
+    .cart__item {
+        flex-direction: column;
+    }
+
+    .subtotal {
+        width: 98%;
+    }
+}
+
+@media (min-width: 870px) {
+    .item-block-right {
+        flex-direction: row;
+        gap: 80px;
+    }
+}
+
+@media (max-width: 870px) {
+    .item-block-right {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+@media (min-width: 320px) {
+    .item-block-left {
+        flex-direction: row;
+    }
+}
+
+@media (max-width: 320px) {
+    .item-block-left {
+        flex-direction: column;
+    }
+
+    .item-block-left {
+        margin-bottom: 14px;
+    }
 }
 </style>

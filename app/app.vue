@@ -61,7 +61,7 @@ watch(
 
 @media (min-width: 400px) and (max-width: 900px) {
     .container {
-        width: 80vw;
+        width: 94vw;
         padding: 0 40px;
     }
 }
