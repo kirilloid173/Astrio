@@ -73,7 +73,14 @@ function totalPriceItem(cartItem: cartData) {
         <p class="subtotal__price">
             Итоговая цена: <span>${{ cartDataStore.totalPrice }}</span>
         </p>
-        <button class="subtotal__button-checkout">Оформить</button>
+        <button
+            v-if="
+                cartDataStore.totalPrice !== 0 && cartDataStore.totalPrice > 0
+            "
+            class="subtotal__button-checkout"
+        >
+            Оформить
+        </button>
     </div>
 </template>
 <style scoped lang="css">
@@ -96,11 +103,12 @@ function totalPriceItem(cartItem: cartData) {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 92px;
+    gap: 100px;
+    margin-right: 40px;
 }
 
 .subtitle__left-block {
-    margin-left: 220px;
+    margin-left: 195px;
 }
 
 .cart {
@@ -151,6 +159,7 @@ function totalPriceItem(cartItem: cartData) {
 .item-block-right__total-price {
     font-size: 26px;
     font-weight: 600;
+    width: 120px;
 }
 
 .item-block-left__image {
