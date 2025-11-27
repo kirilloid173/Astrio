@@ -20,8 +20,6 @@ interface ProductsType {
     quantity?: number;
 }
 
-const cartDataStore = useCartDataStore();
-
 const { data: brandsJson } = await useFetch<BrandsType[]>('/json/brands.json', {
     server: false,
 });
@@ -53,20 +51,6 @@ function filterReset() {
         dataShow.value = productsJson.value;
     }
 }
-
-function addNewItemToCart(productId: number) {
-    if (productsJson.value) {
-        const foundProduct = productsJson.value.find(
-            (item) => item.id === productId
-        );
-        if (foundProduct) {
-            if (!foundProduct.quantity) {
-                foundProduct.quantity = 1;
-            }
-            cartDataStore.addToCart(foundProduct);
-        }
-    }
-}
 </script>
 
 <template>
@@ -91,31 +75,10 @@ function addNewItemToCart(productId: number) {
                     v-for="product in dataShow"
                     :key="product.id"
                 >
-                    <img
-                        class="catalog__image"
-                        :src="product.image"
-                        alt="image_product"
+                    <CatalogItem
+                        :product="product"
+                        :productsJson="productsJson"
                     />
-                    <p class="catalog__item-title">{{ product.title }}</p>
-                    <p class="catalog__item-brand">
-                        Бренд: {{ product.brand }}
-                    </p>
-                    <p class="catalog__item-price">
-                        ${{ product.regular_price.value }}
-                    </p>
-                    <div class="catalog__item-config">
-                        <div class="item-config__red"></div>
-                        <div class="item-config__blue"></div>
-                        <div class="item-config__black"></div>
-                        <div class="item-config__size-m">M</div>
-                        <div class="item-config__size-l">L</div>
-                    </div>
-                    <button
-                        v-on:click="addNewItemToCart(product.id)"
-                        class="catalog__item-button"
-                    >
-                        Добавить в корзину
-                    </button>
                 </div>
             </div>
         </div>
@@ -123,6 +86,23 @@ function addNewItemToCart(productId: number) {
 </template>
 
 <style scoped lang="css">
+.catalog__item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 10px;
+    border: 2px solid transparent;
+    border-radius: 20px;
+    height: max-content;
+}
+
+.catalog__item:hover {
+    cursor: pointer;
+    border: 2px solid rgb(42, 40, 40);
+    box-shadow: 0 8px 10px rgb(42, 40, 40);
+}
+
 .catalog {
     display: flex;
     flex-direction: row;
@@ -170,127 +150,6 @@ p.catalog__filter-title {
     margin-top: 24px;
 }
 
-.catalog__item {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-end;
-    padding: 10px;
-    border: 2px solid transparent;
-    border-radius: 20px;
-}
-
-.catalog__item-config {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    margin-bottom: 16px;
-}
-
-.catalog__item-config div:hover {
-    cursor: pointer;
-    border: 3px solid rgb(227, 165, 20);
-}
-
-.item-config__red {
-    width: 50px;
-    height: 30px;
-    border: 3px solid rgb(48, 47, 47);
-    background-color: rgb(186, 39, 39);
-}
-
-.item-config__blue {
-    width: 50px;
-    height: 30px;
-    border: 3px solid rgb(48, 47, 47);
-    background-color: rgb(40, 125, 228);
-}
-
-.item-config__black {
-    width: 50px;
-    height: 30px;
-    border: 3px solid rgb(48, 47, 47);
-    background-color: rgb(48, 47, 47);
-}
-
-.item-config__size-m {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 50px;
-    height: 30px;
-    border: 3px solid rgb(48, 47, 47);
-    font-weight: 600;
-    font-size: 20px;
-}
-
-.item-config__size-m:hover {
-    color: rgb(227, 165, 20);
-}
-
-.item-config__size-l {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 50px;
-    height: 30px;
-    border: 3px solid rgb(48, 47, 47);
-    font-weight: 600;
-    font-size: 20px;
-}
-
-.item-config__size-l:hover {
-    color: rgb(227, 165, 20);
-}
-
-.catalog__item p:last-of-type {
-    margin-bottom: 12px;
-    margin-top: 14px;
-}
-
-.catalog__item:hover {
-    cursor: pointer;
-    border: 2px solid rgb(42, 40, 40);
-    box-shadow: 0 8px 10px rgb(42, 40, 40);
-}
-
-.catalog__item-title {
-    font-size: 18px;
-    font-weight: 700;
-    margin-bottom: 4px;
-}
-
-.catalog__item-brand {
-    font-size: 16px;
-}
-
-.catalog__item-price {
-    font-size: 24px;
-    font-weight: 700;
-}
-
-.catalog__item img {
-    width: 250px;
-    height: auto;
-}
-
-.catalog__item-button {
-    padding: 12px;
-    border: none;
-    font-size: 14px;
-    border-radius: 20px;
-    color: white;
-    background-color: rgb(48, 47, 47);
-    letter-spacing: 1px;
-}
-
-.catalog__item-button:hover {
-    cursor: pointer;
-    animation: fadeInButton 0.5s;
-    animation-timing-function: ease;
-    animation-fill-mode: forwards;
-}
-
 @keyframes fadeInButton {
     0% {
         background-color: rgb(48, 47, 47);
@@ -300,7 +159,6 @@ p.catalog__filter-title {
         background-color: rgb(85, 116, 73);
     }
 }
-
 @media (min-width: 1440px) {
     .catalog__items {
         gap: 55px;
@@ -341,6 +199,7 @@ p.catalog__filter-title {
         margin: 0 auto;
     }
 }
+
 @media (min-width: 330px) and (max-width: 530px) {
     .catalog__item img {
         width: 100%;
