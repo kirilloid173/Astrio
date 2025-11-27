@@ -110,21 +110,21 @@ function addNewItemToCart(productId: number) {
     width: 50px;
     height: 30px;
     border: 3px solid rgb(48, 47, 47);
-    background-color: rgb(186, 39, 39);
+    background-color: #ff0000;
 }
 
 .item-config__blue {
     width: 50px;
     height: 30px;
     border: 3px solid rgb(48, 47, 47);
-    background-color: rgb(40, 125, 228);
+    background-color: #0000ff;
 }
 
 .item-config__black {
     width: 50px;
     height: 30px;
     border: 3px solid rgb(48, 47, 47);
-    background-color: rgb(48, 47, 47);
+    background-color: #000;
 }
 
 .item-config__size-m {
