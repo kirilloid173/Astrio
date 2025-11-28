@@ -13,6 +13,8 @@ interface cartData {
     image: string;
     brand: number;
     quantity: number;
+    activeColor?: string;
+    activeSize?: string;
 }
 
 function totalPriceItem(cartItem: cartData) {
@@ -44,9 +46,23 @@ function totalPriceItem(cartItem: cartData) {
                     :src="cartData.image"
                     alt="product-logo"
                 />
-                <p class="item-block-left__title">
-                    <span class="mobile-view">Товар: </span>{{ cartData.title }}
-                </p>
+                <div class="item-block-left__config-item">
+                    <p class="item-block-left__title">
+                        <span class="mobile-view">Товар: </span
+                        >{{ cartData.title }}
+                    </p>
+                    <div
+                        v-if="cartData.type === 'configurable'"
+                        class="config-item__options"
+                    >
+                        <p v-if="cartData.activeColor">
+                            Color: {{ cartData.activeColor }}
+                        </p>
+                        <p v-if="cartData.activeSize">
+                            Size: {{ cartData.activeSize }}
+                        </p>
+                    </div>
+                </div>
             </div>
             <div class="item-block-right">
                 <p class="item-block-right__price">
@@ -143,6 +159,13 @@ function totalPriceItem(cartItem: cartData) {
 .item-block-left {
     display: flex;
     align-items: center;
+}
+
+.item-block-left__config-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
 }
 
 .item-block-left__title {

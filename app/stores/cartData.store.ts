@@ -12,6 +12,8 @@ interface ProductsType {
     image: string;
     brand: number;
     quantity: number;
+    activeColor?: string;
+    activeSize?: string;
 }
 
 export const useCartDataStore = defineStore('data', {

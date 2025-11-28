@@ -27,6 +27,8 @@ interface ProductsType {
     brand: number;
     quantity?: number;
     configurable_options?: ConfigurableOptions[];
+    activeColor?: string;
+    activeSize?: string;
 }
 
 const cartDataStore = useCartDataStore();
@@ -87,6 +89,8 @@ function addNewItemToCart(productId: number) {
         if (foundProduct) {
             if (!foundProduct.quantity) {
                 foundProduct.quantity = 1;
+                foundProduct.activeColor = activeOptionColor.value;
+                foundProduct.activeSize = activeOptionSize.value;
             }
             cartDataStore.addToCart(foundProduct);
         }
