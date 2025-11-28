@@ -32,24 +32,52 @@ interface ProductsType {
 const cartDataStore = useCartDataStore();
 
 const optionsColor = [
-    { key: 'red', class: 'item-config__red' },
-    { key: 'blue', class: 'item-config__blue' },
-    { key: 'black', class: 'item-config__black' },
+    { key: 'Red', class: 'item-config__red' },
+    { key: 'Blue', class: 'item-config__blue' },
+    { key: 'Black', class: 'item-config__black' },
 ];
 
 const optionsSize = [
-    { key: 'size-m', class: 'item-config__size-m', label: 'M' },
-    { key: 'size-l', class: 'item-config__size-l', label: 'L' },
+    { key: 'M', class: 'item-config__size-m', label: 'M' },
+    { key: 'L', class: 'item-config__size-l', label: 'L' },
 ];
 
-const activeOptionColor = ref<string>('red');
+const activeOptionColor = ref<string>('Red');
 
-const activeOptionSize = ref<string>('size-m');
+const activeOptionSize = ref<string>('M');
 
 const { product, productsJson } = defineProps<{
     product: ProductsType;
     productsJson: ProductsType[];
 }>();
+
+const checkExistConfig = product.type === 'configurable';
+
+const configListItem = [];
+if (
+    checkExistConfig &&
+    product.configurable_options !== null &&
+    product.configurable_options
+) {
+    for (let i = 0; i < product.configurable_options.length; i++) {
+        if (
+            product.configurable_options[i]?.label &&
+            product.configurable_options[i]?.values !== null
+        ) {
+            for (
+                let t = 0;
+                t < product.configurable_options[i]?.values.length;
+                t++
+            ) {
+                configListItem.push({
+                    label: product.configurable_options[i]?.label,
+                    config: product.configurable_options[i]?.values[t]?.label,
+                });
+            }
+        }
+    }
+    console.log(configListItem);
+}
 
 function addNewItemToCart(productId: number) {
     if (productsJson) {
@@ -73,20 +101,30 @@ function addNewItemToCart(productId: number) {
     <p class="catalog__item-price">${{ product.regular_price.value }}</p>
     <div v-if="product.type === 'configurable'" class="catalog__item-config">
         <div
-            v-for="optColor in optionsColor"
+            v-for="(optColor, index) in optionsColor"
             :key="optColor.key"
             :class="[
                 optColor.class,
                 { active: activeOptionColor === optColor.key },
+                {
+                    disabled:
+                        configListItem[index]?.label === 'Color' &&
+                        configListItem[index]?.config === optColor.key,
+                },
             ]"
             v-on:click="activeOptionColor = optColor.key"
         ></div>
         <div
-            v-for="optSize in optionsSize"
+            v-for="(optSize, index) in optionsSize"
             :key="optSize.key"
             :class="[
                 optSize.class,
                 { active: activeOptionSize === optSize.key },
+                {
+                    disabled:
+                        configListItem[index]?.label === 'Size' &&
+                        configListItem[index]?.config !== optSize.key,
+                },
             ]"
             v-on:click="activeOptionSize = optSize.key"
         >
@@ -100,12 +138,19 @@ function addNewItemToCart(productId: number) {
         Добавить в корзину
     </button>
 </template>
+
 <style scoped lang="css">
 .catalog__item-config {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
     margin-bottom: 16px;
+}
+
+.catalog__item-config .disabled:not(.active):hover {
+    cursor: not-allowed;
+    border: 3px solid rgb(48, 47, 47);
+    color: rgb(48, 47, 47);
 }
 
 .catalog__item-config .active {
