@@ -6,6 +6,21 @@ interface BrandsType {
     code: string;
 }
 
+interface ValuesOptions {
+    label: string;
+    value_index: number;
+    value: string;
+}
+
+interface ConfigurableOptions {
+    attribute_id: number;
+    attribute_code: string;
+    position?: number;
+    id?: number;
+    label: string;
+    values: ValuesOptions[];
+}
+
 interface ProductsType {
     type: string;
     id: number;
@@ -18,6 +33,7 @@ interface ProductsType {
     image: string;
     brand: number;
     quantity?: number;
+    configurable_options?: ConfigurableOptions[];
 }
 
 const { data: brandsJson } = await useFetch<BrandsType[]>('/json/brands.json', {
