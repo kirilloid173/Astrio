@@ -92,6 +92,20 @@ function addNewItemToCart(productId: number) {
         }
     }
 }
+
+function checkAvailableConfig(
+    newOptKey: string,
+    enabledConfig: boolean,
+    type: string
+) {
+    if (enabledConfig) {
+        if (type === 'color') {
+            activeOptionColor.value = newOptKey;
+        } else if (type === 'size') {
+            activeOptionSize.value = newOptKey;
+        }
+    }
+}
 </script>
 
 <template>
@@ -109,10 +123,16 @@ function addNewItemToCart(productId: number) {
                 {
                     disabled:
                         configListItem[index]?.label === 'Color' &&
-                        configListItem[index]?.config === optColor.key,
+                        configListItem[index]?.config !== optColor.key,
                 },
             ]"
-            v-on:click="activeOptionColor = optColor.key"
+            v-on:click="
+                checkAvailableConfig(
+                    optColor.key,
+                    configListItem[index]?.config === optColor.key,
+                    'color'
+                )
+            "
         ></div>
         <div
             v-for="(optSize, index) in optionsSize"
@@ -122,11 +142,17 @@ function addNewItemToCart(productId: number) {
                 { active: activeOptionSize === optSize.key },
                 {
                     disabled:
-                        configListItem[index]?.label === 'Size' &&
-                        configListItem[index]?.config !== optSize.key,
+                        configListItem[index + 3]?.label === 'Size' &&
+                        configListItem[index + 3]?.config !== optSize.key,
                 },
             ]"
-            v-on:click="activeOptionSize = optSize.key"
+            v-on:click="
+                checkAvailableConfig(
+                    optSize.key,
+                    configListItem[index + 3]?.config === optSize.key,
+                    'size'
+                )
+            "
         >
             {{ optSize.label || '' }}
         </div>
