@@ -68,14 +68,47 @@ const optionsSize = [
     { key: 'L', class: 'item-config__size-l', label: 'L' },
 ];
 
-const activeOptionColor = ref<string>('Red');
-
-const activeOptionSize = ref<string>('M');
-
 const { product, productsJson } = defineProps<{
     product: ProductsType;
     productsJson: ProductsType[];
 }>();
+
+const activeOptionColor = ref<string>('Red');
+
+const activeImageItem = ref<string>(product.image);
+
+const activeOptionSize = ref<string>('M');
+
+const resultConfigItem = ref<string>('red-m');
+
+watch(
+    () => activeOptionColor.value,
+    (newValue, oldValue) => {
+        resultConfigItem.value = resultConfigItem.value
+            .replace(/^[^-]+/, newValue)
+            .toLowerCase();
+    }
+);
+
+watch(
+    () => activeOptionSize.value,
+    (newValue, oldValue) => {
+        resultConfigItem.value = resultConfigItem.value
+            .replace(/-.+$/, `-${newValue}`)
+            .toLowerCase();
+    }
+);
+
+watch(
+    () => resultConfigItem.value,
+    (newValue, oldValue) => {
+        const newImageItem = product.variants?.find(
+            (item) => item.product.sku.slice(3) === resultConfigItem.value
+        );
+        if (newImageItem && newImageItem.product.image)
+            activeImageItem.value = newImageItem.product.image;
+    }
+);
 
 const checkExistConfig = product.type === 'configurable';
 
@@ -98,7 +131,6 @@ if (
             }
         }
     }
-    console.log(configListItem);
 }
 
 function addNewItemToCart(productId: number) {
@@ -107,7 +139,6 @@ function addNewItemToCart(productId: number) {
             (item: ProductsType) => item.id === productId
         );
         if (foundProduct) {
-            console.log(foundProduct);
             if (!foundProduct.quantity) {
                 foundProduct.quantity = 1;
                 foundProduct.activeColor = activeOptionColor.value;
@@ -142,7 +173,7 @@ function checkAvailableConfig(
 </script>
 
 <template>
-    <img class="catalog__image" :src="product.image" alt="image_product" />
+    <img class="catalog__image" :src="activeImageItem" alt="image_product" />
     <p class="catalog__item-title">{{ product.title }}</p>
     <p class="catalog__item-brand">Бренд: {{ product.brand }}</p>
     <p class="catalog__item-price">${{ product.regular_price.value }}</p>
