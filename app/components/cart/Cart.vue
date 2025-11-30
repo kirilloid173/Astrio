@@ -113,6 +113,7 @@ function totalPriceItem(cartItem: cartData) {
         </button>
     </div>
 </template>
+
 <style scoped lang="css">
 .cart-title {
     font-size: 32px;
