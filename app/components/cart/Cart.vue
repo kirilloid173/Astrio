@@ -43,7 +43,7 @@ function totalPriceItem(cartItem: cartData) {
             <div class="item-block-left">
                 <img
                     class="item-block-left__image"
-                    :src="cartData.image"
+                    :src="cartData.imageSrc || cartData.image"
                     alt="product-logo"
                 />
                 <div class="item-block-left__config-item">

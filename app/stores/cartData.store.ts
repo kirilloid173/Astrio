@@ -10,6 +10,7 @@ interface ProductsType {
         value: number;
     };
     image: string;
+    imageSrc?: string;
     brand: number;
     quantity: number;
     activeColor?: string;

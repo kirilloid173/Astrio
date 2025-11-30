@@ -29,6 +29,9 @@ interface ProductsType {
     configurable_options?: ConfigurableOptions[];
     activeColor?: string;
     activeSize?: string;
+    resultVariant?: string;
+    imageSrc?: string;
+    variants?: Array<Object>;
 }
 
 const cartDataStore = useCartDataStore();
@@ -87,10 +90,19 @@ function addNewItemToCart(productId: number) {
             (item: ProductsType) => item.id === productId
         );
         if (foundProduct) {
+            console.log(foundProduct);
             if (!foundProduct.quantity) {
                 foundProduct.quantity = 1;
                 foundProduct.activeColor = activeOptionColor.value;
                 foundProduct.activeSize = activeOptionSize.value;
+                foundProduct.resultVariant = `${activeOptionColor.value.toLowerCase()}-${activeOptionSize.value.toLowerCase()}`;
+                const imageURL = foundProduct.variants?.find(
+                    (item) =>
+                        item.product.sku.slice(3) === foundProduct.resultVariant
+                );
+                if (imageURL && imageURL !== null) {
+                    foundProduct.imageSrc = imageURL.product.image;
+                }
             }
             cartDataStore.addToCart(foundProduct);
         }
