@@ -38,12 +38,14 @@ interface ProductsType {
 
 const { data: brandsJson } = await useFetch<BrandsType[]>('/json/brands.json', {
     server: false,
+    default: () => [],
 });
 
 const { data: productsJson } = await useFetch<ProductsType[]>(
     '/json/products.json',
     {
         server: false,
+        default: () => [],
     }
 );
 

@@ -12,7 +12,7 @@ interface ProductsType {
     image: string;
     imageSrc?: string;
     brand: number;
-    quantity: number;
+    quantity?: number;
     activeColor?: string;
     activeSize?: string;
 }

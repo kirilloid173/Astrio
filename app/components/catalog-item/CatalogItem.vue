@@ -1,4 +1,9 @@
 <script setup lang="ts">
+interface ConfigListItemType {
+    label: string;
+    config: string;
+}
+
 interface ValuesOptions {
     label: string;
     value_index: number;
@@ -12,6 +17,22 @@ interface ConfigurableOptions {
     id?: number;
     label: string;
     values: ValuesOptions[];
+}
+
+interface AttributesType {
+    code: string;
+    value_index: number;
+}
+
+interface AttributesProductType {
+    id: number;
+    sku: string;
+    image: string;
+}
+
+interface VariantsType {
+    attributes: AttributesType;
+    product: AttributesProductType;
 }
 
 interface ProductsType {
@@ -31,7 +52,7 @@ interface ProductsType {
     activeSize?: string;
     resultVariant?: string;
     imageSrc?: string;
-    variants?: Array<Object>;
+    variants?: Array<VariantsType>;
 }
 
 const cartDataStore = useCartDataStore();
@@ -58,25 +79,21 @@ const { product, productsJson } = defineProps<{
 
 const checkExistConfig = product.type === 'configurable';
 
-const configListItem = [];
+const configListItem: Array<ConfigListItemType> = [];
 if (
     checkExistConfig &&
     product.configurable_options !== null &&
     product.configurable_options
 ) {
     for (let i = 0; i < product.configurable_options.length; i++) {
-        if (
-            product.configurable_options[i]?.label &&
-            product.configurable_options[i]?.values !== null
-        ) {
-            for (
-                let t = 0;
-                t < product.configurable_options[i]?.values.length;
-                t++
-            ) {
+        const option = product.configurable_options[i];
+
+        if (option && option.label && option.values) {
+            for (let t = 0; t < option.values.length; t++) {
                 configListItem.push({
-                    label: product.configurable_options[i]?.label,
-                    config: product.configurable_options[i]?.values[t]?.label,
+                    label: product.configurable_options[i]?.label || '',
+                    config:
+                        product.configurable_options[i]?.values[t]?.label || '',
                 });
             }
         }
