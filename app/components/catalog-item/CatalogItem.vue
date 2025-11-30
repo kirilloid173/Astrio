@@ -232,7 +232,6 @@ function checkAvailableConfig(
 <style scoped lang="css">
 .catalog__item-config {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
     gap: 10px;
     margin-bottom: 16px;
 }
@@ -361,10 +360,21 @@ function checkAvailableConfig(
     }
 }
 
+@media (min-width: 360px) {
+    .catalog__item-config {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
 @media (max-width: 360px) {
     .catalog__item img {
         width: 100%;
     }
+
+    .catalog__item-config {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
     .catalog__filter {
         margin-right: 15px;
     }

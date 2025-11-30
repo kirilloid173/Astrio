@@ -228,6 +228,11 @@ p.catalog__filter-title {
     .catalog__item img {
         width: 100%;
     }
+
+    .catalog__item {
+        width: 160px;
+    }
+
     .catalog__filter {
         margin-right: 15px;
     }
